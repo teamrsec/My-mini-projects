@@ -1,0 +1,59 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: system-ui, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 420px;
+}
+form label {
+    display: block;
+    margin: 15px 0 6px;
+    font-weight: 600;
+}
+form input, form select {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 16px;
+    font-size: 1.3rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+button:hover { background: #0056b3; }
+.result {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    text-align: center;
+}
+#tipAmount, #totalAmount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+}
+#totalAmount {
+    color: #28a745;
+}
+.hidden { display: none; }
+#status { margin-top: 25px; color: #666; }

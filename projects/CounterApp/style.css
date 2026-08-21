@@ -1,0 +1,40 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: system-ui, sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+.counter-value {
+    font-size: 6rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    transition: all 0.3s;
+}
+.controls button {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.controls #increment { background: #28a745; color: white; }
+.controls #decrement { background: #dc3545; color: white; }
+.controls #reset { background: #6c757d; color: white; }
+#status {
+    margin-top: 30px;
+    font-size: 1.1rem;
+    color: #666;
+}

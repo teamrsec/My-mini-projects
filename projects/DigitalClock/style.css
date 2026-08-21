@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.clock-container {
+    text-align: center;
+}
+
+.clock {
+    background: rgba(255,255,255,0.95);
+    border-radius: 30px;
+    padding: 40px 60px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 8px;
+}
+
+.clock span {
+    color: #333;
+}
+
+#ampm {
+    font-size: 1.1rem;
+    margin-left: 10px;
+    color: #ff6b6b;
+}
+
+#status {
+    margin-top: 30px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
