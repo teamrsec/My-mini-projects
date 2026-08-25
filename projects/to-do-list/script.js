@@ -5,13 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.filters button');
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let currentFilter = 'all';
 
-    function renderTasks(filter = 'all') {
+    function renderTasks() {
         taskList.innerHTML = '';
         
         let filteredTasks = tasks;
-        if (filter === 'active') filteredTasks = tasks.filter(t => !t.completed);
-        if (filter === 'completed') filteredTasks = tasks.filter(t => t.completed);
+        if (currentFilter === 'active') filteredTasks = tasks.filter(t => !t.completed);
+        if (currentFilter === 'completed') filteredTasks = tasks.filter(t => t.completed);
 
         if (filteredTasks.length === 0) {
             const empty = document.createElement('li');
@@ -21,35 +22,46 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        filteredTasks.forEach((task, index) => {
+        filteredTasks.forEach((task) => {
+            const taskIndex = tasks.indexOf(task);
             const li = document.createElement('li');
             li.className = `task-item ${task.completed ? 'completed' : ''}`;
-            li.innerHTML = `
-                <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleComplete(${index})">
-                <span class="task-text">${task.text}</span>
-                <button class="delete-btn" onclick="deleteTask(${index})">🗑</button>
-            `;
+            li.dataset.index = taskIndex;
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = task.completed;
+            checkbox.className = 'task-checkbox';
+            checkbox.setAttribute('aria-label', `Mark "${task.text}" as complete`);
+
+            const text = document.createElement('span');
+            text.className = 'task-text';
+            text.textContent = task.text;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-btn';
+            deleteButton.type = 'button';
+            deleteButton.textContent = '🗑';
+            deleteButton.setAttribute('aria-label', `Delete "${task.text}"`);
+
+            li.append(checkbox, text, deleteButton);
             taskList.appendChild(li);
         });
     }
 
     function toggleComplete(index) {
+        if (!tasks[index]) return;
         tasks[index].completed = !tasks[index].completed;
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        renderTasks(getCurrentFilter());
+        renderTasks();
     }
 
     function deleteTask(index) {
         if (confirm('Delete this task?')) {
             tasks.splice(index, 1);
             localStorage.setItem('tasks', JSON.stringify(tasks));
-            renderTasks(getCurrentFilter());
+            renderTasks();
         }
-    }
-
-    function getCurrentFilter() {
-        const activeBtn = document.querySelector('.filters button.active');
-        return activeBtn ? activeBtn.id.replace('filter', '').toLowerCase() : 'all';
     }
 
     function addTask() {
@@ -64,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         localStorage.setItem('tasks', JSON.stringify(tasks));
         taskInput.value = '';
-        renderTasks(getCurrentFilter());
+        renderTasks();
     }
 
     // Event listeners
@@ -73,11 +85,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') addTask();
     });
 
+    taskList.addEventListener('change', (e) => {
+        if (e.target.classList.contains('task-checkbox')) {
+            toggleComplete(Number(e.target.closest('.task-item').dataset.index));
+        }
+    });
+
+    taskList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+            deleteTask(Number(e.target.closest('.task-item').dataset.index));
+        }
+    });
+
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderTasks(btn.id.replace('filter', '').toLowerCase());
+            currentFilter = btn.id.replace('filter', '').toLowerCase();
+            renderTasks();
         });
     });
 
